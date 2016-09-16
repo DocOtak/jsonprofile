@@ -32,7 +32,7 @@ JSON Hydrographic Profile
 
   "index": [], // required but can be empty
   "data": [], // optional key, no null values allowed
-  "quality: [], // optional key,  no null values allowed
+  "quality": [], // optional key,  no null values allowed
 
   "awaiting": [], // optional key, containins "index" values, equivalent to woce descrete flag 1
   "missing" [] // optional key, contains "index" calues, euivalent to woce discrete flag 5
