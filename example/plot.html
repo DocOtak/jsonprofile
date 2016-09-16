@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<head>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+
+
+  <body>
+    <div id="tester" style="width:600px;height:100%;"></div>
+
+  <script>
+
+TESTER = document.getElementById('tester');
+d3.json("profile.json", function(data){
+  Plotly.plot( TESTER, [{
+  x: data.data,
+  y: data.index}], {
+    modeBarButtonsToRemove: ['hoverCompareCartesian'],
+    margin: { t: 0 }, 
+    yaxis: {title: data.index_parameter,
+      autorange: 'reversed'},
+    xaxis: {title: data.data_parameter}
+  } );
+});
+  </script>
