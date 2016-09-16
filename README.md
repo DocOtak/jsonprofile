@@ -14,7 +14,7 @@ JSON Hydrographic Profile
     rfc3339 is quite strict (this is desired for date times) but we
     might also want to know how precise the reported time actually is
     for use when looking at processess of differing time scales.
-  /*
+  */
   "date": "rfc3339",
   "date_precision": 60, // deciaml seconds for the most precise time reported
 
