@@ -2,7 +2,17 @@ import json
 import datetime
 
 INDEX_COLUMN = "CTDPRS"
-PARAM_COLUMN = "CTDOXY"
+PARAM_COLUMN = "CTDSAL"
+PARAM_UNIT = "PSU"
+
+CTD_QUALITY_MAP = {
+        "1": 0.8,
+        "2": 0.95,
+        "3": 0.5,
+        "4": 0.3,
+        "6": 0.9,
+        "7": 0.85,
+        }
 
 output = {
         "type": "c"
@@ -61,7 +71,7 @@ output["index_unit"] = "dbar"
 output["index_type"] = "decimal"
 
 output["data_parameter"] = PARAM_COLUMN
-output["data_unit"] = "umol kg-1"
+output["data_unit"] = PARAM_UNIT
 output["data_precision"] = 1
 
 data_values = data[data_index:end_data_index]
@@ -80,7 +90,7 @@ for datum in data_values:
 
     index.append(float(split[index_index]))
     data.append(float(split[value_index]))
-    quality.append(split[quality_index])
+    quality.append(CTD_QUALITY_MAP[split[quality_index]])
 
 output["index"] = index
 output["data"] = data

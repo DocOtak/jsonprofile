@@ -10,15 +10,37 @@
   <script>
 
 TESTER = document.getElementById('tester');
-d3.json("profile.json", function(data){
-  Plotly.plot( TESTER, [{
-  x: data.data,
-  y: data.index}], {
-    modeBarButtonsToRemove: ['hoverCompareCartesian'],
-    margin: { t: 0 }, 
-    yaxis: {title: data.index_parameter,
-      autorange: 'reversed'},
-    xaxis: {title: data.data_parameter}
-  } );
-});
-  </script>
+
+d3.queue()
+  .defer(d3.json, "ctdtmp.json")
+  .defer(d3.json, "ctdoxy.json")
+  .defer(d3.json, "ctdsal.json")
+  .await(makePlot);
+
+function makePlot(err, tmp, oxy, sal){
+  Plotly.plot(TESTER,
+    [
+      {
+        x: tmp.data,
+        y: tmp.index,
+        name: tmp.data_parameter + " (" + tmp.data_unit + ")",
+      },
+      {
+        x: oxy.data,
+        y: oxy.index,
+        name: oxy.data_parameter + " (" + oxy.data_unit + ")",
+      },
+      {
+        x: sal.data,
+        y: sal.index,
+        name: sal.data_parameter + " (" + sal.data_unit + ")",
+      },
+
+    ],
+    {
+    margin: { t: 0, b: 100 }, 
+    yaxis: {title: tmp.index_parameter, autorange: 'reversed'},
+    }
+  );
+}
+</script>
