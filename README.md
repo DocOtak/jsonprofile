@@ -9,6 +9,7 @@ JSON Hydrographic Profile
   "cast": "some cast id"
   "lat": 0, // Decimal degs north
   "lon": 0, // decimal degs east
+  "elevation": -6000, // meters above sea level (completly avoid the whole "depth" issue)
 
   /*
     rfc3339 is quite strict (this is desired for date times) but we
@@ -38,7 +39,7 @@ JSON Hydrographic Profile
       3: 0.5 [0.4, 0.75)
       4: 0.3 [0, 0.4)
       5: put index value into "missing"
-      6: 0.95
+      6: 0.90
       7: 0.85
       8: Not used
       9: Discard the index value
