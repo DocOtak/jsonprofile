@@ -78,5 +78,7 @@ JSON Hydrographic Profile
 
   "awaiting": [], // optional key, containins "index" values, equivalent to woce descrete flag 1
   "missing" [] // optional key, contains "index" calues, euivalent to woce discrete flag 5
+
+  "uncertainty": [] //optional key, must be same length as "index", has the units "data_unit", has precision "data_precision", has only positive values which are ± the values in "data"
   }
 ```
