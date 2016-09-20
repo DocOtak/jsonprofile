@@ -3,21 +3,21 @@ JSON Hydrographic Profile
 
 ```javascript
 {
-  "type": "c", // "c" for continious, or "d" for descrete, for ODV purposes only
+  "type": "c", // "c" for continuous, or "d" for discrete, for ODV purposes only
   "cruise": "some cruise", // probably an expocode
   "station": "some station id",
   "cast": "some cast id"
   "lat": 0, // Decimal degs north
   "lon": 0, // decimal degs east
-  "elevation": -6000, // meters above sea level (completly avoid the whole "depth" issue)
+  "elevation": -6000, // meters above sea level (completely avoid the whole "depth" issue)
 
   /*
     rfc3339 is quite strict (this is desired for date times) but we
     might also want to know how precise the reported time actually is
-    for use when looking at processess of differing time scales.
+    for use when looking at processes of differing time scales.
   */
   "date": "2016-09-19T09:53:00Z", // an rfc3339 datetime
-  "date_precision": 60, // deciaml seconds for the most precise time reported
+  "date_precision": 60, // decimal seconds for the most precise time reported
 
   "index_parameter": "SAMPNO",
   "index_unit": nil,
@@ -61,7 +61,7 @@ JSON Hydrographic Profile
       5: Put index value into "missing"
       9: Discard index value
 
-      This is a somewhat continious scale with some mappings:
+      This is a somewhat continuous scale with some mappings:
       woce:
       0          0.4             0.9         1
       |-----------|---------------|----------|
@@ -76,8 +76,8 @@ JSON Hydrographic Profile
           odv:8       odv:4   odv:1    odv:0
   */
 
-  "awaiting": [], // optional key, containins "index" values, equivalent to woce descrete flag 1
-  "missing" [] // optional key, contains "index" calues, euivalent to woce discrete flag 5
+  "awaiting": [], // optional key, contains "index" values, equivalent to woce discrete flag 1
+  "missing" [] // optional key, contains "index" values, equivalent to woce discrete flag 5
 
   "uncertainty": [] //optional key, must be same length as "index", has the units "data_unit", has precision "data_precision", has only positive values which are ± the values in "data"
   }
