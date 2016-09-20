@@ -31,7 +31,7 @@ JSON Hydrographic Profile
 
   "index": [], // required but can be empty
   "data": [], // optional key, no null values allowed
-  "quality": [], // optional key,  no null values allowed, numeric between 0 and 1 with 1 being "perfect" quality data
+  "confidence": [], // optional key,  no null values allowed, numeric between 0 and 1 with 1 being "perfect quality" data
   /* a proposed mapping
     woce_ctd:
       1: 0.8 [0.75, 0.9)

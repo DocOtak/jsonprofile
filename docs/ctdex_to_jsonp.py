@@ -82,7 +82,7 @@ quality_index = params.index(PARAM_COLUMN + "_FLAG_W")
 
 index = []
 data = []
-quality = []
+confidence = []
 awaiting = []
 
 for datum in data_values:
@@ -90,11 +90,11 @@ for datum in data_values:
 
     index.append(float(split[index_index]))
     data.append(float(split[value_index]))
-    quality.append(CTD_QUALITY_MAP[split[quality_index]])
+    confidence.append(CTD_QUALITY_MAP[split[quality_index]])
 
 output["index"] = index
 output["data"] = data
-output["quality"] = quality
+output["confidence"] = quality
 
 
 print(json.dumps(output))
