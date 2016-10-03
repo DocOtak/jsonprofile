@@ -77,8 +77,24 @@ JSON Hydrographic Profile
   */
 
   "awaiting": [], // optional key, contains "index" values, equivalent to woce discrete flag 1
-  "missing" [] // optional key, contains "index" values, equivalent to woce discrete flag 5
+  "missing" [], // optional key, contains "index" values, equivalent to woce discrete flag 5
 
-  "uncertainty": [] //optional key, must be same length as "index", has the units "data_unit", has precision "data_precision", has only positive values which are ± the values in "data"
+  "uncertainty": [], //optional key, must be same length as "index", has the units "data_unit", has precision "data_precision", has only positive values which are ± the values in "data"
+
+  /* Structures under consideration */
+
+  "comments": "", // optional key, for humans, applies to the entire profile, cannot change the meaning of the rest of the object
+  "index_comments": {
+		// this object can have as many entries as there are in "index" + "awaiting" + "missing"
+    "index": "comment" // "row level" comments for humans, applied to some specific index, "index" must be a string (cast) and appear in one of "index", "awaiting" or "missing", convert numbers to strings.
+  },
+  "legacy": {
+      "sum": ???, // sumfile representation for this "cast", format TBD
+      "woce_quality: {
+				// this object can have as many entries as there are in "index" + "awaiting" + "missing"
+				// the "_FLAG_W" for the data column from an exchange file, no information on flag definitions (just like a normal exchange file)
+        "index": "quality flag" // where "index" must be in the columns of "index", "awaiting", or "missing", convert numbers to strings
+      },
+    }
   }
 ```
