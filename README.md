@@ -90,7 +90,7 @@ JSON Hydrographic Profile
   },
   "legacy": {
       "sum": ???, // sumfile representation for this "cast", format TBD
-      "woce_quality: {
+      "woce_quality": {
 				// this object can have as many entries as there are in "index" + "awaiting" + "missing"
 				// the "_FLAG_W" for the data column from an exchange file, no information on flag definitions (just like a normal exchange file)
         "index": "quality flag" // where "index" must be in the columns of "index", "awaiting", or "missing", convert numbers to strings
