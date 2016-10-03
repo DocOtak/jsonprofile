@@ -83,6 +83,11 @@ JSON Hydrographic Profile
 
   /* Structures under consideration */
 
+  "citation": {
+    "text": "", //some citation string (probably provided by the data origionator
+    "doi": "" // if the profile has some doi...
+  },
+
   "comments": "", // optional key, for humans, applies to the entire profile, cannot change the meaning of the rest of the object
   "index_comments": {
 		// this object can have as many entries as there are in "index" + "awaiting" + "missing"
