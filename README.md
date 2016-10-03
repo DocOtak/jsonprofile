@@ -108,7 +108,7 @@ JSON Hydrographic Profile
       // datetime string as the key of the object
       "rfc3339_datetime" : {
         "comment": "", // the why of the change
-        "patch": [] // the patch of the change
+        "patch": [] // a reverse patch of the change (applying this patch rolls the change back)
       }
     }
   }
