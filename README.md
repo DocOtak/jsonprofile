@@ -100,6 +100,16 @@ JSON Hydrographic Profile
 				// the "_FLAG_W" for the data column from an exchange file, no information on flag definitions (just like a normal exchange file)
         "index": "quality flag" // where "index" must be in the columns of "index", "awaiting", or "missing", convert numbers to strings
       },
+    },
+
+  /// Really crazy idea...
+  "history": {
+      // a collection of patches with some extra information, with a
+      // datetime string as the key of the object
+      "rfc3339_datetime" : {
+        "comment": "", // the why of the change
+        "patch": [] // the patch of the change
+      }
     }
   }
 ```
