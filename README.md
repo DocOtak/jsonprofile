@@ -1,6 +1,12 @@
 JSON Hydrographic Profile
 =========================
 
+Perhaps this should just be renamed to CCHDO-IR (for internal
+representation)... The citation information will be critical to the
+success of this I think. So I need to put some extra thought into making
+this section nice... more than one author seperately listed? support for
+links in the citation, only one DOI?
+
 ```javascript
 {
   "type": "c", // "c" for continuous, or "d" for discrete, for ODV purposes only
@@ -18,19 +24,25 @@ JSON Hydrographic Profile
   */
   "date": "2016-09-19T09:53:00Z", // an rfc3339 datetime
   "date_precision": 60, // decimal seconds for the most precise time reported
+  "date_uncertainty": 10800, // decimal seconds for range of possible times this profile may be, for almost all CCHDO profiles this will be around 10800 seconds (±3 hours)
 
+  // parameters names will probably just be "cchdo" ones, but can be
+  // anything, the only requirement is to be "intercomparable"
+  // (depenidng on units)
   "index_parameter": "SAMPNO",
-  "index_unit": nil,
+  "index_unit": nil, // udunits compatable
   "index_type": "string",
   "index_precision": nil, // how many decimal places (for comparing)
+  "index_standard_name": "", // optional, must have value, if available, the CF standard name
 
   "data_parameter": "OXYGEN",
-  "data_unit": "umol kg-1"
+  "data_unit": "umol kg-1" // udunits compatible requried (e.g. "PSU" Salinity has units of nothing or 1)
   "data_type": "decimal"
   "data_precision": 3, // how many decimal places
+  "data_standard_name": "", // optional, must have value, if available, the CF standard name
 
   "index": [], // required but can be empty
-  "data": [], // optional key, no null values allowed
+  "data": [], // required key, no null values allowed, must be same length as "index"
   "confidence": [], // optional key,  no null values allowed, numeric between 0 and 1 with 1 being "perfect quality" data
   /* a proposed mapping
     woce_ctd:
@@ -80,10 +92,12 @@ JSON Hydrographic Profile
   "missing" [], // optional key, contains "index" values, equivalent to woce discrete flag 5
 
   "uncertainty": [], //optional key, must be same length as "index", has the units "data_unit", has precision "data_precision", has only positive values which are ± the values in "data"
+  "uncertainty_neg": [] // optional key, must only be present when "uncertainty" is also present, may only contain negative values or zero
 
   /* Structures under consideration */
 
   "citation": {
+    "name": "" // The name of the person/PI responsible for this profile
     "text": "", //some citation string (probably provided by the data origionator
     "doi": "" // if the profile has some doi...
   },
@@ -100,9 +114,12 @@ JSON Hydrographic Profile
 				// the "_FLAG_W" for the data column from an exchange file, no information on flag definitions (just like a normal exchange file)
         "index": "quality flag" // where "index" must be in the columns of "index", "awaiting", or "missing", convert numbers to strings
       },
+      "excahnge_footer": "", // anything that comes after the "END_DATA"
+      "exchange_unit": "", // there are some funny unit names in exchange format that are not actually units e.g. ITS-90
     },
 
   /// Really crazy idea...
+  // probably stored seperatly in a database and populated on demand
   "history": {
       // a collection of patches with some extra information, with a
       // datetime string as the key of the object
