@@ -9,7 +9,7 @@ links in the citation, only one DOI?
 
 ```javascript
 {
-  "type": "c", // "c" for continuous, or "d" for discrete, for ODV purposes only
+  "type": "d", // "c" for continuous, or "d" for discrete, for ODV purposes only
   "cruise": "some cruise", // probably an expocode
   "station": "some station id",
   "cast": "some cast id"
@@ -31,70 +31,33 @@ links in the citation, only one DOI?
   // (depenidng on units)
   "index_parameter": "SAMPNO",
   "index_unit": nil, // udunits compatable
+  "index_scale": nil, // optional, a string which provides calibration information, e.g. PSS-78, ITS-90
   "index_type": "string",
   "index_precision": nil, // how many decimal places (for comparing)
   "index_standard_name": "", // optional, must have value, if available, the CF standard name
 
   "data_parameter": "OXYGEN",
   "data_unit": "umol kg-1" // udunits compatible requried (e.g. "PSU" Salinity has units of nothing or 1)
+  "data_scale": nil, // optional, a string which provides calibration information, e.g. PSS-78, ITS-90
   "data_type": "decimal"
   "data_precision": 3, // how many decimal places
   "data_standard_name": "", // optional, must have value, if available, the CF standard name
 
-  "index": [], // required but can be empty
-  "data": [], // required key, no null values allowed, must be same length as "index"
-  "confidence": [], // optional key,  no null values allowed, numeric between 0 and 1 with 1 being "perfect quality" data
-  /* a proposed mapping
-    woce_ctd:
-      1: 0.8 [0.75, 0.9)
-      2: 0.95 [0.9, 1]
-      3: 0.5 [0.4, 0.75)
-      4: 0.3 [0, 0.4)
-      5: put index value into "missing"
-      6: 0.90
-      7: 0.85
-      8: Not used
-      9: Discard the index value
-    woce_discrete:
-      1: put index value into "awaiting"
-      2: 0.95 [0.9, 1]
-      3: 0.5 (0.4, 0.9)
-      4: 0.3 [0, 0.4]
-      5: put index value into "missing"
-      6: 0.95 
-      7: ??
-      8: ??
-      9: discard index value
-    woce_bottle:
-      1: 0.8 [0.75, 0.9)
-      2: 0.95 [0.9, 1]
-      3: 0.5 [0.4, 0.75)
-      4: 0.3 [0, 0.4)
-      5: Put index value into "missing"
-      9: Discard index value
-
-      This is a somewhat continuous scale with some mappings:
-      woce:
-      0          0.4             0.9         1
-      |-----------|---------------|----------|
-          bad       questionable     good
-      Oceansites:
-      0          0.4        0.7    0.9        1
-      |-----------|----------|-----|----------|
-          bad       os:4      os:2    os:1
-      ODV:
-      0          0.4        0.7    0.9        1
-      |-----------|----------|-----|----------|
-          odv:8       odv:4   odv:1    odv:0
-  */
+  "index": [], // optional key, cannot be empty (must have at least one value or be omitted)
+  "data": [], // optional key, no null values allowed, must be same length as "index", omitted if empty
+  "masks": { // optional key, must have keys with arrays the same length as index, contains data masks to exclude points for various reasons, for space reasons, 1 and 0 vs true an false
+    /// some examples (should we define what masks can be in here?):
+    "oxyfit":[0,0,1,0],  // note that because it is a mask, a true value will EXCLUDE the indicated data point
+    "bad": [0,0,1,0],
+    "questionable": [0,1,1,0] //should probably incldue "bad" data as questionable as well
+  }
 
   "awaiting": [], // optional key, contains "index" values, equivalent to woce discrete flag 1
   "missing" [], // optional key, contains "index" values, equivalent to woce discrete flag 5
 
   "uncertainty": [], //optional key, must be same length as "index", has the units "data_unit", has precision "data_precision", has only positive values which are ± the values in "data"
-  "uncertainty_neg": [] // optional key, must only be present when "uncertainty" is also present, may only contain negative values or zero
+  "uncertainty_neg": [] // optional key, must only be present when "uncertainty" is also present, may only contain positive values which represent the unvertanty in the "minus" direction
 
-  /* Structures under consideration */
 
   "citation": {
     "name": "" // The name of the person/PI responsible for this profile
@@ -105,7 +68,7 @@ links in the citation, only one DOI?
   "comments": "", // optional key, for humans, applies to the entire profile, cannot change the meaning of the rest of the object
   "index_comments": {
 		// this object can have as many entries as there are in "index" + "awaiting" + "missing"
-    "index": "comment" // "row level" comments for humans, applied to some specific index, "index" must be a string (cast) and appear in one of "index", "awaiting" or "missing", convert numbers to strings.
+    "index": "comment" // "row level" comments for humans, applied to some specific index, "index" must be a string (cast) and appear in one of "index", "awaiting" or "missing", convert numbers to strings using index_precision as a truncation length.
   },
   "legacy": {
       "sum": ???, // sumfile representation for this "cast", format TBD
@@ -115,7 +78,6 @@ links in the citation, only one DOI?
         "index": "quality flag" // where "index" must be in the columns of "index", "awaiting", or "missing", convert numbers to strings
       },
       "excahnge_footer": "", // anything that comes after the "END_DATA"
-      "exchange_unit": "", // there are some funny unit names in exchange format that are not actually units e.g. ITS-90
     },
 
   /// Really crazy idea...
